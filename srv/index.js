@@ -4,7 +4,7 @@ const { config } = require('dotenv')
 config()
 
 const express = require('express')
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const { connectDatabase } = require('../database')
 
 const app = express()
