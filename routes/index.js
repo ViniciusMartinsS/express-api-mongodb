@@ -1,9 +1,9 @@
 'use strict'
 
-const usersRouter = require('./users')
+const authRouter = require('./auth')
 const vehiclesRouter = require('./vehicles')
 
 module.exports = {
-  usersRouter,
+  authRouter,
   vehiclesRouter
 }

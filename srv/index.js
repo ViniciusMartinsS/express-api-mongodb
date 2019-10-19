@@ -11,13 +11,13 @@ const { validateAuthToken } = require('../middleware')
 
 const app = express()
 
-const { usersRouter, vehiclesRouter } = require('../routes')
+const { authRouter, vehiclesRouter } = require('../routes')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/vehicles', validateAuthToken, vehiclesRouter)
-app.use('/login', usersRouter)
+app.use('/auth', authRouter)
 
 app.listen(3000, () => {
   connectDatabase()

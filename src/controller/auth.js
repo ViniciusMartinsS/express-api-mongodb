@@ -11,7 +11,7 @@ module.exports.login = async ({ body }) => {
 
   const user = await find(email, password)
 
-  if (!user || !user.result || !user.result.length) {
+  if (!user || !user.length) {
     throw new Error('Unauthorized')
   }
 

@@ -1,11 +1,15 @@
 'use strict'
 
-module.exports.find = (email, password) =>
+module.exports.find = (email, password, _id) =>
   new Promise(async (resolve, reject) => {
     const { collection } = getCollection()
 
     collection
-      .find({ email })
+      .find({
+        ...(_id && { _id }),
+        ...(email && { email }),
+        ...(password && { password })
+      })
       .toArray((err, user) => {
         if (err) {
           return reject(err)
