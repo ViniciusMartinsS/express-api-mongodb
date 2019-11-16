@@ -6,7 +6,7 @@ config()
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const { validateAuthToken } = require('../middleware')
+const { validateAuthToken, validatePayload } = require('../middleware')
 
 const app = express()
 
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/auth', authRouter)
-app.use('/vehicles', validateAuthToken, vehiclesRouter)
+app.use('/vehicles', validateAuthToken, validatePayload, vehiclesRouter)
 
 app.listen(3000, () => {
   console.log('Server running on 3000')
