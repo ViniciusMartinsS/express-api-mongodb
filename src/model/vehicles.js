@@ -1,10 +1,11 @@
 'use strict'
 
 const { ObjectId } = require('mongodb')
+const { connectDatabase } = require('../../database')
 
 module.exports.create = vehicle =>
   new Promise(async (resolve, reject) => {
-    const { collection } = getCollection()
+    const { collection } = await getCollection()
 
     collection.insertOne(vehicle, (err, vehicle) => {
       if (err) {
@@ -19,7 +20,7 @@ module.exports.create = vehicle =>
 
 module.exports.find = (_id, brand) =>
   new Promise(async (resolve, reject) => {
-    const { collection } = getCollection()
+    const { collection } = await getCollection()
 
     collection
       .find({
@@ -36,8 +37,8 @@ module.exports.find = (_id, brand) =>
   })
 
 module.exports.update = (_id, vehicle) =>
-  new Promise((resolve, reject) => {
-    const { collection } = getCollection()
+  new Promise(async (resolve, reject) => {
+    const { collection } = await await getCollection()
 
     collection.findOneAndUpdate(
       { _id: new ObjectId(_id) }, { $set: vehicle }, { returnOriginal: false },
@@ -53,8 +54,8 @@ module.exports.update = (_id, vehicle) =>
   })
 
 module.exports.remove = _id =>
-  new Promise((resolve, reject) => {
-    const { collection } = getCollection()
+  new Promise(async (resolve, reject) => {
+    const { collection } = await getCollection()
 
     collection.findOneAndDelete({ _id: new ObjectId(_id) }, (err, vehicle) => {
       if (err) {
@@ -67,8 +68,8 @@ module.exports.remove = _id =>
     })
   })
 
-function getCollection () {
-  const { db } = require('../../database')
+async function getCollection () {
+  const db = await connectDatabase()
   const collection = db.collection('vehicle')
 
   return { collection }

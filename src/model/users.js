@@ -1,8 +1,10 @@
 'use strict'
 
+const { connectDatabase } = require('../../database')
+
 module.exports.find = (email, password, _id) =>
   new Promise(async (resolve, reject) => {
-    const { collection } = getCollection()
+    const { collection } = await getCollection()
 
     collection
       .find({
@@ -20,8 +22,8 @@ module.exports.find = (email, password, _id) =>
       })
   })
 
-function getCollection () {
-  const { db } = require('../../database')
+async function getCollection () {
+  const db = await connectDatabase()
   const collection = db.collection('user')
 
   return { collection }
